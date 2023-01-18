@@ -9,7 +9,16 @@ export default function Home({ navigation }) {
   const [isLoading, setIsloading] = useState(false);
 
   useEffect(() => {
-    fetcher(setIsloading, setItems);
+    setIsloading(true);
+    fetcher()
+      .then(({ data }) => setItems(data))
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Error", "Go");
+      })
+      .finally(() => {
+        setIsloading(false);
+      });
   }, []);
 
   if (isLoading) {
